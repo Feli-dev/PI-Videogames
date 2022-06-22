@@ -3,9 +3,10 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   sequelize.define('videogame', {
     ID: {
-      type: DataTypes.UUIDV4, 
+      type: DataTypes.UUID, 
       allowNull: false,
       unique: true,
+      primaryKey: true,
     },
     name: {
       type: DataTypes.STRING,
@@ -22,7 +23,7 @@ module.exports = (sequelize) => {
       type: DataTypes.FLOAT,
     },
     platforms: {
-      type: DataTypes.ARRAY,
+      type: DataTypes.JSON,
       allowNull: false,
     }
   });
