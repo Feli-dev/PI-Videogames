@@ -1,21 +1,21 @@
 const { Videogame, conn } = require('../../src/db.js');
 const { expect } = require('chai');
 
-describe('Videogame model', () => {
+describe('Modelo Videogame', () => {
   before(() => conn.authenticate()
     .catch((err) => {
-      console.error('Unable to connect to the database:', err);
+      console.error('No se puede conectar a la base de datos: ', err);
     }));
-  describe('Validators', () => {
+  describe('Validaciones', () => {
     beforeEach(() => Videogame.sync({ force: true }));
     describe('name', () => {
-      it('should throw an error if name is null', (done) => {
+      it('Debe arrojar un error si el name es null', (done) => {
         Videogame.create({})
-          .then(() => done(new Error('It requires a valid name')))
+          .then(() => done(new Error('Requiere un nombre válido')))
           .catch(() => done());
       });
-      it('should work when its a valid name', () => {
-        Recipe.create({ name: 'Super Mario Bros' });
+      it('Debería funcionar cuando recibe un nombre válido', () => {
+        Videogame.create({ name: 'Feli' });
       });
     });
   });

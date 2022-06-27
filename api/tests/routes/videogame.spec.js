@@ -6,18 +6,20 @@ const { Videogame, conn } = require('../../src/db.js');
 
 const agent = session(app);
 const videogame = {
-  name: 'Super Mario Bros',
+  name: 'Feli',
+  description: "lorem",
+  platforms: ["PS Vita", "PS3"],
 };
 
-describe('Videogame routes', () => {
+describe('Rutas Videogames', () => {
   before(() => conn.authenticate()
   .catch((err) => {
-    console.error('Unable to connect to the database:', err);
+    console.error('No se puede conectar a la base de datos: ', err);
   }));
   beforeEach(() => Videogame.sync({ force: true })
     .then(() => Videogame.create(videogame)));
   describe('GET /videogames', () => {
-    it('should get 200', () =>
+    it('Debería obtener un status 200', () =>
       agent.get('/videogames').expect(200)
     );
   });
