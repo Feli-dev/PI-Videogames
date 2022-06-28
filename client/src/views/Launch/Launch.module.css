@@ -1,0 +1,22 @@
+img {
+    padding: 0%;
+    width: 50rem;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(30px 10px 10px rgb(165, 213, 240));
+    transition: all ease 200ms;
+}
+
+img:hover {
+    transform: scale(1.01);
+    transition: all ease 200ms;
+}
+
+.content {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 7rem;
+}

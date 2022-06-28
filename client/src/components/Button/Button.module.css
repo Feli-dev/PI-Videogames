@@ -1,0 +1,35 @@
+@import url(https://fonts.googleapis.com/css?family=Quicksand:300,400,700);
+
+.button {
+    cursor: pointer;
+    width: 200px;
+    height: 60px;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    border: none;
+    border-radius: 10px;
+    padding: 0px;
+    overflow: hidden;
+    outline: none;
+    box-shadow: 0 0 60px 10px rgba(0,0,0,0.2);
+    transition: all ease 200ms;
+    filter: drop-shadow(30px 10px 10px rgb(165, 213, 240));
+}
+
+.button:hover {
+  transform: scale(1.02);
+  transition: all ease 200ms;
+}
+
+.content {
+    font-family: quicksand;
+    font-size: 20px;
+    font-weight: 400;
+    color: white;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 60px;
+  }
