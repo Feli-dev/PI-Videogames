@@ -4,6 +4,8 @@ import { Route } from "react-router-dom";
 import './App.css';
 import Launch from "./views/Launch/Launch";
 import Home from "./views/Home/Home";
+import Form from "./views/Form/Form";
+
 //Agregar path a /home
 function App() {
   return (
@@ -14,9 +16,10 @@ function App() {
       <Route exact path="/home">
           <Home/>
       </Route>
-      <Route path="/videogames">
-        <h1>Ruta videogames</h1>  
+      <Route path="/form">
+         <Form/>
       </Route>
+
     </div>
   );
 }

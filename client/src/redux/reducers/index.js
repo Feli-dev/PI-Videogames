@@ -76,6 +76,10 @@ export const rootReducer =(state = initialState, action)=>{
                 ...state,
                 videogames: sortedRating,
             }
+        case type.POST_GAME:
+            return {
+                ...state,
+            }
         default: 
             return state;
     }

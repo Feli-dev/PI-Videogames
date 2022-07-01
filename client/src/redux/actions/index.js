@@ -48,3 +48,10 @@ export function sortByRating(payload) {
         payload,
     }
 }
+
+export function postGame(payload) {
+    return async (dispatch) => {
+        const response = axios.post('http://localhost:5001/videogames', payload);
+        return {type: type.POST_GAME};
+    }
+}

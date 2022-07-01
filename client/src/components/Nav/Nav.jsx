@@ -10,7 +10,7 @@ const Nav =()=>{
 
     return (
         <div className={style.nav}>
-            <Button content={add_icon} route={"/home"} width={"60px"} height={"60px"} text_size={"10px"} borderRadius={"20px"}/>
+            <Button content={add_icon} route={"/form"} width={"60px"} height={"60px"} text_size={"10px"} borderRadius={"20px"}/>
             <SearchBar/>
             <Button content={user_icon} route={"/home"} width={"60px"} height={"60px"} text_size={"10px"} borderRadius={"20px"}/>
         </div>
