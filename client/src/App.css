@@ -41,12 +41,17 @@ body {
   margin: 0;
   width: 100vw;
   height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: linear-gradient(
     to right, 
     rgb(232, 233, 232) 0%, 
     rgb(182, 219, 240) 100%
   );
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body a {
+  text-decoration: none;
 }

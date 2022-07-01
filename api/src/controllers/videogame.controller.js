@@ -11,7 +11,7 @@ const getVideogames = async (req, res) => {
         if(name) {
             var data_db = await Videogame.findAll({
                 limit: 15,
-                attributes: ['ID','name', 'genders'],
+                attributes: ['id','name', "genders", "image", "rating", "createdInDb"],
                 where: {
                     name: {
                         [Op.like] : "%"+name+"%"
@@ -22,24 +22,27 @@ const getVideogames = async (req, res) => {
             if(data.length<1 && data_db<1) throw new Error("No hay resultados para la busqueda.")
         } else {
             var data_db = await Videogame.findAll({
-                attributes: ['ID','name'],
+                attributes: ['id','name', "image", "rating", "createdInDb"],
                 include: Gender,
             })
-            var {data} = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}`)
+            var json1 = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page_size=40`);
+            var json2 = await axios.get(json1.data.next);
+            var json3 = await axios.get(json2.data.next);
+            var json4 = await axios.get(json3.data.next);
+            var json5 = await axios.get(json4.data.next);
         }
+        var data = [].concat(json1.data.results, json2.data.results, json3.data.results, json4.data.results, json5.data.results)
         var data_filt = []
-        data.results.forEach(e => {
+        data.forEach(e => {
             data_filt.push({
                 id:e.id,
                 background_image: e.background_image,
                 name: e.name,
                 genres: e.genres,
+                rating: e.rating,
             })
         });
-        var all_data = {
-            api_data:data_filt,
-            db_data:data_db,
-        }
+        var all_data = [].concat(data_filt, data_db)
         res.json(all_data)
     } catch(err) {
         res.status(404).send(err.message)
@@ -68,7 +71,7 @@ const getIdVideogame = async (req, res) => {
 const postVideogames = async (req, res) => {
     //background_image, name y genres
     //15 por página
-    const {name, description, launch_Date, rating, platforms, idsGenres} = req.body
+    const {name, description, launch_Date, rating, platforms, image, idsGenres} = req.body
     if(!(name&&description&&platforms)) throw new Error("Mandatory parameters not received")
     try {
         const new_Videogame = await Videogame.create(
@@ -78,6 +81,7 @@ const postVideogames = async (req, res) => {
                 launch_Date, 
                 rating, 
                 platforms,
+                image,
             }
         )
         if(idsGenres && idsGenres.length>=1){

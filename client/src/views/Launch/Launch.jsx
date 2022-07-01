@@ -3,13 +3,13 @@ import Button from "../../components/Button/Button";
 import SteamDeck from "../../img/steamdeck.png"
 import style from './Launch.module.css';
 
-const Home =()=>{ 
+const Launch =()=>{ 
     return(
         <div className={style.content}>
-            <img style={style.img} src={SteamDeck} alt="Steam Deck" />
-            <Button texto={"Play"}/>
+            <img className={style.steamdeck} src={SteamDeck} alt="Steam Deck" />
+            <Button content={"Play"} height={"72px"} width={"240px"} text_size={"24px"} route={"/home"} borderRadius={"10px"} />
         </div>
     ); 
 }
 
-export default Home; 
+export default Launch; 

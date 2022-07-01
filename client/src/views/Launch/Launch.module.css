@@ -1,6 +1,6 @@
-img {
+.steamdeck {
     padding: 0%;
-    width: 50rem;
+    width: 63rem;
     display:flex;
     align-items: center;
     justify-content: center;
@@ -8,7 +8,7 @@ img {
     transition: all ease 200ms;
 }
 
-img:hover {
+.steamdeck:hover {
     transform: scale(1.01);
     transition: all ease 200ms;
 }

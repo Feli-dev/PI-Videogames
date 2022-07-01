@@ -2,12 +2,9 @@
 
 .button {
     cursor: pointer;
-    width: 200px;
-    height: 60px;
     background: rgba(0,0,0,0.8);
     display: flex;
     border: none;
-    border-radius: 10px;
     padding: 0px;
     overflow: hidden;
     outline: none;
@@ -23,7 +20,6 @@
 
 .content {
     font-family: quicksand;
-    font-size: 20px;
     font-weight: 400;
     color: white;
     position: absolute;
@@ -32,4 +28,9 @@
     justify-content: center;
     width: 200px;
     height: 60px;
-  }
+}
+
+.content svg {
+  fill: beige;
+  width: 60%;
+}
