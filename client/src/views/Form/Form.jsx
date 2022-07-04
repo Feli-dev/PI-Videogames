@@ -139,55 +139,51 @@ const Form =()=>{
 
 
     return (
-        <>  
+        <div className={style.formContainer}>  
             {/* Nav solo User y volver atras*/}
             {/* Formulario */}
-            <form onSubmit={e => handleSubmit(e)}>
-                <div>
-                    <label><strong>Name: </strong></label>
-                    <input type='text' value={input.name} name='name' onChange={e => handleChange(e)} />
+            <form onSubmit={e => handleSubmit(e)} className={style.form}>
+                <div  className={style.boxLabelInput}>
+                    <label className={style.formLabel}>Name</label>
+                    <input className={style.formInput} type='text' value={input.name} name='name' onChange={e => handleChange(e)} />
                     {errors.name && (
-                        <p className='error'><strong>{errors.name}</strong></p>
-                    )}
+                        <p className='error'>{errors.name}</p>
+                        )}
                 </div>
-                <div>
-                    <label><strong>Description: </strong></label>
-                    <input type='text' value={input.description} name='description' onChange={e => handleChange(e)} />
-                    <label><strong> cm</strong></label>
+                <div className={style.boxLabelInput}>
+                    <label className={style.formLabel}>Description</label>
+                    <input className={style.formInput} type='text' value={input.description} name='description' onChange={e => handleChange(e)} />
                     {errors.description && (
-                        <p className='error'><strong>{errors.description}</strong></p>
-                    )}
+                        <p className='error'>{errors.description}</p>
+                        )}
                 </div>
-                <div>
-                    <label><strong>Launch Date: </strong></label>
-                    <input type='date' value={input.launch_date} name='launch_date' onChange={e => handleChange(e)} />
-                    <label><strong> cm</strong></label>
+                <div className={style.boxLabelInput}>
+                    <label className={style.formLabel}>Launch Date</label>
+                    <input className={style.formInputDate} type='date' value={input.launch_date} name='launch_date' onChange={e => handleChange(e)} />
                     {errors.launch_date && (
-                        <p className='error'><strong>{errors.launch_date}</strong></p>
+                        <p className='error'>{errors.launch_date}</p>
                     )}
                 </div>
-                <div>
-                    <label><strong>Rating: </strong></label>
-                    <input type='text' value={input.rating} name='rating' onChange={e => handleChange(e)} />
-                    <label><strong> kg</strong></label>
+                <div className={style.boxLabelInput}>
+                    <label className={style.formLabel}>Rating</label>
+                    <input className={style.formInput} type='text' value={input.rating} name='rating' onChange={e => handleChange(e)} />
                     {errors.rating && (
-                        <p className='error'><strong>{errors.rating}</strong></p>
+                        <p className='error'>{errors.rating}</p>
                     )}
                 </div>
-                <div>
-                    <label><strong>Platforms: </strong></label>
-                    <input type='text' value={input.platforms} name='platforms' onChange={e => handleChange(e)} />
-                    <label><strong> kg</strong></label>
+                <div className={style.boxLabelInput}>
+                    <label className={style.formLabel}>Platforms</label>
+                    <input className={style.formInput} type='text' value={input.platforms} name='platforms' onChange={e => handleChange(e)} />
                     {errors.platforms && (
-                        <p className='error'><strong>{errors.platforms}</strong></p>
+                        <p className='error'>{errors.platforms}</p>
                     )}
                 </div>
-                <div>
-                    <label><strong>Image: </strong></label>
-                    <input type='text' value={input.image} name='image' onChange={e => handleChange(e)} />
+                <div className={style.boxLabelInput}>
+                    <label className={style.formLabel}>Image</label>
+                    <input className={style.formInput} type='text' value={input.image} name='image' onChange={e => handleChange(e)} />
                 </div>
-                <div>
-                    <select onChange={e => handleSelect(e)} >
+                <div className={style.boxLabelInput}>
+                    <select className={style.formSelect} onChange={e => handleSelect(e)} >
                         <option value='selected' hidden >Genres</option>
                         {allGenres?.sort(function (a, b) {
                             if (a.name < b.name) return -1;
@@ -205,7 +201,7 @@ const Form =()=>{
                             
                                 <ul className='allTemps' key={el}>
                                     <li>
-                                        <p className='temp'><strong>{el}</strong></p>
+                                        <p className='temp'>{el}</p>
                                         <button onClick={() => handleDeleteTemperament(el)} className='x' >X</button>
                                     </li>
                                 </ul>
@@ -214,10 +210,14 @@ const Form =()=>{
                     })}
 
                 </div>
-                <button type='submit' className='boop' ><strong>Cargar</strong></button>
+                <button type='submit' className={style.formButton} >
+                    <div className={style.formButtonContent}>
+                        Guardar
+                    </div>
+                </button>
 
             </form>
-        </>
+        </div>
     )
 }
 
