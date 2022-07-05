@@ -5,6 +5,7 @@ import './App.css';
 import Launch from "./views/Launch/Launch";
 import Home from "./views/Home/Home";
 import Form from "./views/Form/Form";
+import Detail from "./views/Detail/Detail";
 
 //Agregar path a /home
 function App() {
@@ -16,8 +17,11 @@ function App() {
       <Route exact path="/home">
           <Home/>
       </Route>
-      <Route path="/form">
+      <Route exact path="/form">
          <Form/>
+      </Route>
+      <Route path="/videogames/:id">
+        <Detail/>
       </Route>
 
     </div>

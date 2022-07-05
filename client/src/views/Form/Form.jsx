@@ -1,52 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {getGenres, postGame} from "../../redux/actions/index"
 import style from './Form.module.css';
+import Nav from "../../components/Nav/Nav";
 
 function validate(input) { //Arreglar validaciones
     let errors = {};
     if (!input.name) {
-        errors.name = 'Your breed must have a name';
+        errors.name = 'Your game must have a name';
     }
     else if (input.name.length > 30) {
         errors.name = 'Thats way too long a name. Keep it simple!!';
     }
     else if (!input.description) {
-        errors.description = 'Minimum height is required!!';
-    }
-    else if (input.description <= 0) {
-        errors.description = 'Your breed cant be shorter than 0';
-    }
-    else if (parseInt(input.description) >= parseInt(input.launch_date)) {
-        errors.description = 'Minimum height should be lower than maximum height';
+        errors.description = 'Description is required!!';
     }
     else if (!input.launch_date) {
-        errors.launch_date = 'Maximum height is required!!';
-    }
-    else if (input.launch_date > 150) {
-        errors.launch_date = 'I think 150cm is enough for a dogs height, dont you?';
+        errors.launch_date = 'Launch date is required!!';
     }
     else if (!input.rating) {
-        errors.rating = 'Minimum weight is required!!';
+        errors.rating = 'Rating is required!!';
     }
     else if (isNaN(parseInt(input.rating))) {
-        errors.rating = 'Weight should be a number';
+        errors.rating = 'Rating should be a number';
     }
     else if (input.rating <= 0) {
-        errors.rating = 'Your breed must weight at least more than nothingness';
-    }
-    else if (!input.platforms) {
-        errors.platforms = 'Maximum weight is required!!';
-    }
-    else if (isNaN(parseInt(input.platforms))) {
-        errors.platforms = 'Weight should be a number';
-    }
-    else if (parseInt(input.platforms) <= parseInt(input.rating)) {
-        errors.platforms = 'Maximum weight should be higher than minimum weight';
-    }
-    else if (input.platforms > 200) {
-        errors.platforms = 'We are creating a dog, not an elephant 🐘!! Keep your weight under 200';
+        errors.rating = 'Your rating must be greater than zero';
     }
 
     return errors;
@@ -79,11 +59,6 @@ const Form =()=>{
             ...input,
             [e.target.name]: e.target.value,
         });
-        // Esta función hace lo siguiente:
-        // Cada vez que modifique o agregue algo, a mi estado input, además de lo que tiene, le agrega
-        // el value de lo que se esté modificando. La idea es que a medida que vaya llenando los inputs
-        // del formulario, me vaya modificando el estado inicial, que tiene todas las propiedades vacías.
-
         setErrors(validate({
             ...input,
             [e.target.name]: e.target.value,
@@ -94,27 +69,44 @@ const Form =()=>{
 
     
     function handleSelect(e) {
-        if (!input.genres.includes(e.target.value)) {
-            var idGenre = []
+        var encontrado=false;
+        input.genres.map(element => {
+            if(element.name === e.target.value) {
+                encontrado = true;
+            }
+            return null;
+        })
+        if(!encontrado){
+            var idGenre = "";
             allGenres.map(gen => {
                 if(e.target.value === gen.name){
-                    idGenre.push(gen.id)
+                    idGenre = gen.id
                 }
-            })
-            setInput({
-                ...input,
-                genres: [...input.genres, idGenre[0]]
-            });
-            console.log(input);
+                return null;
+                })
+                setInput({
+                    ...input,
+                    genres: [...input.genres, {name: e.target.value, id: idGenre}]
+                });
+                console.log(input);
         }
     }
     
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(errors);
         if (!Object.getOwnPropertyNames(errors).length && input.name && input.description && input.launch_date && input.rating && input.platforms && input.genres.length) {
-            dispatch(postGame(input));
-            alert('Doggie created 👏');
+            var genresIds = []
+            input.genres.map(el => genresIds.push(el.id))
+            dispatch(postGame({
+                name: input.name,
+                description: input.description,
+                launch_date: input.launch_date,
+                rating: input.rating,
+                platforms: input.platforms,
+                image: input.image,
+                idsGenres: genresIds,
+            }));
+            alert('Game created 🎮');
             setInput({
                 name: '',
                 description: '',
@@ -125,98 +117,102 @@ const Form =()=>{
                 genres: [],
             });
             history.push('/home');
-        } else {
-            alert('Doggie cant be created with these data 🤷‍♂️')
         }
     }
 
-    function handleDeleteTemperament(el) {
+    function handleDeleteGenres(el) {
         setInput({
             ...input,
-            genres: input.genres.filter(genre => genre !== el)
+            genres: input.genres.filter(genre => genre.name !== el)
         })
     }
 
 
     return (
-        <div className={style.formContainer}>  
-            {/* Nav solo User y volver atras*/}
-            {/* Formulario */}
-            <form onSubmit={e => handleSubmit(e)} className={style.form}>
-                <div  className={style.boxLabelInput}>
-                    <label className={style.formLabel}>Name</label>
-                    <input className={style.formInput} type='text' value={input.name} name='name' onChange={e => handleChange(e)} />
-                    {errors.name && (
-                        <p className='error'>{errors.name}</p>
-                        )}
-                </div>
-                <div className={style.boxLabelInput}>
-                    <label className={style.formLabel}>Description</label>
-                    <input className={style.formInput} type='text' value={input.description} name='description' onChange={e => handleChange(e)} />
-                    {errors.description && (
-                        <p className='error'>{errors.description}</p>
-                        )}
-                </div>
-                <div className={style.boxLabelInput}>
-                    <label className={style.formLabel}>Launch Date</label>
-                    <input className={style.formInputDate} type='date' value={input.launch_date} name='launch_date' onChange={e => handleChange(e)} />
-                    {errors.launch_date && (
-                        <p className='error'>{errors.launch_date}</p>
-                    )}
-                </div>
-                <div className={style.boxLabelInput}>
-                    <label className={style.formLabel}>Rating</label>
-                    <input className={style.formInput} type='text' value={input.rating} name='rating' onChange={e => handleChange(e)} />
-                    {errors.rating && (
-                        <p className='error'>{errors.rating}</p>
-                    )}
-                </div>
-                <div className={style.boxLabelInput}>
-                    <label className={style.formLabel}>Platforms</label>
-                    <input className={style.formInput} type='text' value={input.platforms} name='platforms' onChange={e => handleChange(e)} />
-                    {errors.platforms && (
-                        <p className='error'>{errors.platforms}</p>
-                    )}
-                </div>
-                <div className={style.boxLabelInput}>
-                    <label className={style.formLabel}>Image</label>
-                    <input className={style.formInput} type='text' value={input.image} name='image' onChange={e => handleChange(e)} />
-                </div>
-                <div className={style.boxLabelInput}>
-                    <select className={style.formSelect} onChange={e => handleSelect(e)} >
-                        <option value='selected' hidden >Genres</option>
-                        {allGenres?.sort(function (a, b) {
-                            if (a.name < b.name) return -1;
-                            if (a.name > b.name) return 1;
-                            return 0;
-                        }).map(genre => {
-                            return (
-                                <option value={genre.name} key={genre.id}>{genre.name}</option>
-                            )
-                        })}
-                    </select>
-
-                    {input.genres.map(el => {
-                        return (
-                            
-                                <ul className='allTemps' key={el}>
-                                    <li>
-                                        <p className='temp'>{el}</p>
-                                        <button onClick={() => handleDeleteTemperament(el)} className='x' >X</button>
-                                    </li>
-                                </ul>
-                            
-                        )
-                    })}
-
-                </div>
-                <button type='submit' className={style.formButton} >
-                    <div className={style.formButtonContent}>
-                        Guardar
+        <div>
+            <Nav/>
+            <div className={style.formContainer}>  
+                <form onSubmit={e => handleSubmit(e)} className={style.form}>
+                    <div  className={style.boxLabelInput}>
+                        <label className={style.formLabel}>Name</label>
+                        <input className={style.formInput} type='text' value={input.name} name='name' onChange={e => handleChange(e)} />
+                        {errors.name && (
+                            <p className='error'>{errors.name}</p>
+                            )}
                     </div>
-                </button>
+                    <div className={style.boxLabelInput}>
+                        <label className={style.formLabel}>Description</label>
+                        <input className={style.formInput} type='text' value={input.description} name='description' onChange={e => handleChange(e)} />
+                        {errors.description && (
+                            <p className='error'>{errors.description}</p>
+                            )}
+                    </div>
+                    <div className={style.boxLabelInput}>
+                        <label className={style.formLabel}>Launch Date</label>
+                        <input className={style.formInputDate} type='date' value={input.launch_date} name='launch_date' onChange={e => handleChange(e)} />
+                        {errors.launch_date && (
+                            <p className='error'>{errors.launch_date}</p>
+                        )}
+                    </div>
+                    <div className={style.boxLabelInput}>
+                        <label className={style.formLabel}>Rating</label>
+                        <input className={style.formInput} type='text' value={input.rating} name='rating' onChange={e => handleChange(e)} />
+                        {errors.rating && (
+                            <p className='error'>{errors.rating}</p>
+                        )}
+                    </div>
+                    <div className={style.boxLabelInput}>
+                        <label className={style.formLabel}>Platforms</label>
+                        <input className={style.formInput} type='text' value={input.platforms} name='platforms' onChange={e => handleChange(e)} />
+                        {errors.platforms && (
+                            <p className='error'>{errors.platforms}</p>
+                        )}
+                    </div>
+                    <div className={style.boxLabelInput}>
+                        <label className={style.formLabel}>Image</label>
+                        <input className={style.formInput} type='text' value={input.image} name='image' onChange={e => handleChange(e)} />
+                    </div>
+                    <div className={style.boxSelect}>
+                        <select className={style.formSelect} onChange={e => {
+                            handleSelect(e)
+                            e.target.options[0].selected = true
+                            }} >
+                            <option value='selected' hidden >Select a Genre</option>
+                            {allGenres?.sort(function (a, b) {
+                                if (a.name < b.name) return -1;
+                                if (a.name > b.name) return 1;
+                                return 0;
+                            }).map(genre => {
+                                return (
+                                    <option className={style.selectOption} value={genre.name} key={genre.id}>{genre.name}</option>
+                                )
+                            })}
+                        </select>
+                        
+                        <div className={style.boxGenresSelected}>
+                            {input.genres.map(el => {
+                                return (
+                                    <div className={style.cube}>
+                                        <div className={style.cubeContent}>
+                                            <p className={style.LiText}>{el.name}</p>
+                                            <button onClick={() => handleDeleteGenres(el.name)} className={style.LiButton}>❌</button>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
 
-            </form>
+                    </div>
+                    <div className={style.boxButton}>
+                        <button type='submit' className={style.formButton} >
+                            <div className={style.formButtonContent}>
+                                Save
+                            </div>
+                        </button>
+                    </div>
+
+                </form>
+            </div>
         </div>
     )
 }

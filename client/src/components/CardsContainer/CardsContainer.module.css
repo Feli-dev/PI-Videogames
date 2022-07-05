@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Quicksand:300,400,700);
+
 .cardscontainer {
     display: flex;
     flex-direction: row;
@@ -5,5 +7,54 @@
     justify-content: space-evenly;
     align-items: center;
     row-gap: 20px;
-    margin: 100px 0px 100px 0px;
+    margin: 40px 0px;
+}
+
+.filterandorder {
+    margin: 0%;
+    margin-top: 2%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.lista {
+    width: 80vw;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.itemSelect {
+    cursor: pointer;
+    background: rgba(0,0,0,0.8);
+    border: none;
+    padding: 0px;
+    color: white;
+    font-size: 15px;
+    font-family: quicksand;
+    font-weight: 400;
+    outline: none;
+    box-shadow: 0 0 60px 10px rgba(0,0,0,0.2);
+    transition: all ease 200ms;
+    filter: drop-shadow(30px 10px 10px rgb(165, 213, 240));
+    width: 200px;
+    height: 50px;
+    border-radius: 20px;
+    padding-left: 16px;
+    border-right: 16px solid transparent;
+    margin-bottom: 20px;
+    margin-top: 5px;
+}
+
+.selectOption {
+    cursor: pointer;
+    background: rgba(0,0,0,0.8);
+    color: white;
+    font-size: 15px;
+    font-family: quicksand;
+    font-weight: 400;
 }

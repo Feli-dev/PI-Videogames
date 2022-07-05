@@ -1,12 +1,17 @@
 import axios from "axios";
 import { type } from "./types";
 
-export function getVideogames(){
+export function getVideogames(name){
     return async (dispatch) => {
-        var {data} = await axios.get("http://localhost:5001/videogames", {mode:"no-cors"}) 
+        var json;
+        if(name){
+            json = await axios.get(`http://localhost:5001/videogames?name=${name}`) 
+        } else {
+            json = await axios.get("http://localhost:5001/videogames") 
+        }
         return dispatch({
             type: type.GET_VIDEOGAMES,
-            payload: data,
+            payload: json.data,
         })
     }
 }
@@ -51,7 +56,21 @@ export function sortByRating(payload) {
 
 export function postGame(payload) {
     return async (dispatch) => {
-        const response = axios.post('http://localhost:5001/videogames', payload);
+        axios.post('http://localhost:5001/videogames', payload);
         return {type: type.POST_GAME};
+    }
+}
+
+export function getDetail(id) {
+    return async function (dispatch) {
+        try {
+            var {data} = await axios.get('http://localhost:5001/videogames/' + id);
+            return dispatch({
+                type: type.GET_DETAIL,
+                payload: data
+            })
+        } catch (err) {
+            console.log(err)
+        }
     }
 }

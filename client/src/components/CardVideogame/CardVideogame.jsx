@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const CardVideogame = ({name, genres, image, route}) => {
     return (
         // cambiar to={`/${route}`}
-        <Link to={"/home"}> 
+        <Link to={`videogames/${route}`}> 
             <div className={style.card}>
                 <img className={style.imgcard} src={image} alt="Not found" />
                 <div className={style.textblock}>

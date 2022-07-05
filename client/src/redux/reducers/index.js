@@ -80,6 +80,11 @@ export const rootReducer =(state = initialState, action)=>{
             return {
                 ...state,
             }
+        case type.GET_DETAIL:
+            return {
+                ...state,
+                detail: action.payload,
+            }
         default: 
             return state;
     }

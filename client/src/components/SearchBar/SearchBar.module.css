@@ -25,3 +25,41 @@
     border: none;   
     outline: none;    
 }
+
+.buttonSearch {
+    cursor: pointer;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    border: none;
+    padding: 0px;
+    overflow: hidden;
+    outline: none;
+    box-shadow: 0 0 60px 10px rgba(0,0,0,0.2);
+    transition: all ease 200ms;
+    filter: drop-shadow(30px 10px 10px rgb(165, 213, 240));
+    width: 50px;
+    height: 50px;
+    border-radius: 0 15px 15px 0;
+}
+
+.buttonSearch:hover {
+    transform: scale(1.02);
+    transition: all ease 200ms;
+}
+
+.content {
+    font-family: quicksand;
+    font-weight: 400;
+    color: white;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+}
+
+.content svg {
+  fill: beige;
+  width: 60%;
+}

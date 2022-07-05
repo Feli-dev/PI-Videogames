@@ -1,11 +1,12 @@
 import React from "react";
-import style from './Detail.module.css';
+import Nav from "../../components/Nav/Nav" 
+import CardDetail from "../../components/CardDetail/CardDetail";
 
 const Detail =()=>{
     return (
         <>
-            {/* Nav con todo y flecha*/}
-            {/* CardDetail */}
+            <Nav/>
+            <CardDetail/>
             {/* 5 Juegos del mismo género */}
         </>
     )

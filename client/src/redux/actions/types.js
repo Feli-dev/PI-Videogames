@@ -5,6 +5,7 @@ export const type = {
     FILTER_BY_ORIGIN: "FILTER_BY_ORIGIN",
     SORT_BY_NAME: "SORT_BY_NAME",
     SORT_BY_RATING: "SORT_BY_RATING",
-    POST_GAME: "POST_GAME"
+    POST_GAME: "POST_GAME",
+    GET_DETAIL: "GET_DETAIL"
   };
   

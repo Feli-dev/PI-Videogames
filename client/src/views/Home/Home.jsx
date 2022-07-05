@@ -1,7 +1,4 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux"
-import { getVideogames } from "../../redux/actions";
 // Components 
 import Nav from "../../components/Nav/Nav"
 import CardsContainer from "../../components/CardsContainer/CardsContainer"
@@ -12,7 +9,6 @@ const Home =()=>{
     return (
         <div>
             <Nav/>
-            {/* Agregar - SearchBar - User */}
             {/* Carrusel */}
             <CardsContainer/>
         </div>

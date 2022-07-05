@@ -1,6 +1,6 @@
 require('dotenv').config();
 const axios = require("axios")
-const {Videogame, Gender} = require("../db")
+const {Videogame, Genre} = require("../db")
 const {API_KEY} = process.env;
 const {Op} = require("sequelize")
 
@@ -11,39 +11,54 @@ const getVideogames = async (req, res) => {
         if(name) {
             var data_db = await Videogame.findAll({
                 limit: 15,
-                attributes: ['id','name', "genders", "image", "rating", "createdInDb"],
+                attributes: ['id','name', "image", "rating", "createdInDb"],
+                include: Genre,
                 where: {
                     name: {
                         [Op.like] : "%"+name+"%"
                     }
                 }
             })
-            var {data} = await axios.get(`https://api.rawg.io/api/games?search=${name}&key=${API_KEY}&page_size=15`) //se puede? page_size
+            var json1 = await axios.get(`https://api.rawg.io/api/games?search=${name}&key=${API_KEY}&page_size=40`) //se puede? page_size
+            var data = [].concat(json1.data.results)
+            var data_filt = []
+            data.forEach(e => {
+                data_filt.push({
+                    id:e.id,
+                    background_image: e.background_image,
+                    name: e.name,
+                    genres: e.genres,
+                    rating: e.rating,
+                })
+            });
+            var all_data = [].concat(data_filt, data_db)
             if(data.length<1 && data_db<1) throw new Error("No hay resultados para la busqueda.")
+            else res.json(all_data)
         } else {
             var data_db = await Videogame.findAll({
                 attributes: ['id','name', "image", "rating", "createdInDb"],
-                include: Gender,
+                include: Genre,
             })
             var json1 = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page_size=40`);
-            var json2 = await axios.get(json1.data.next);
-            var json3 = await axios.get(json2.data.next);
-            var json4 = await axios.get(json3.data.next);
-            var json5 = await axios.get(json4.data.next);
+            // var json2 = await axios.get(json1.data.next);
+            // var json3 = await axios.get(json2.data.next);
+            // var json4 = await axios.get(json3.data.next);
+            // var json5 = await axios.get(json4.data.next);
+            // var data = [].concat(json1.data.results, json2.data.results, json3.data.results, json4.data.results, json5.data.results)
+            var data = [].concat(json1.data.results)
+            var data_filt = []
+            data.forEach(e => {
+                data_filt.push({
+                    id:e.id,
+                    background_image: e.background_image,
+                    name: e.name,
+                    genres: e.genres,
+                    rating: e.rating,
+                })
+            });
+            var all_data = [].concat(data_filt, data_db)
+            res.json(all_data)
         }
-        var data = [].concat(json1.data.results, json2.data.results, json3.data.results, json4.data.results, json5.data.results)
-        var data_filt = []
-        data.forEach(e => {
-            data_filt.push({
-                id:e.id,
-                background_image: e.background_image,
-                name: e.name,
-                genres: e.genres,
-                rating: e.rating,
-            })
-        });
-        var all_data = [].concat(data_filt, data_db)
-        res.json(all_data)
     } catch(err) {
         res.status(404).send(err.message)
     }
@@ -86,8 +101,8 @@ const postVideogames = async (req, res) => {
         )
         if(idsGenres && idsGenres.length>=1){
             idsGenres.map(async (elem) => {
-                var genre = await Gender.findByPk(elem)
-                await new_Videogame.setGenders(genre)
+                var genre = await Genre.findByPk(elem)
+                await new_Videogame.setGenres(genre)
             })
         }
         res.send("Videogame successfully added")

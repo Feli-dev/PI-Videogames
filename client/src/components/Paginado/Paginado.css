@@ -4,6 +4,7 @@
     margin: 0;
     font-size: medium;
 }
+
 .paginado li {
     display: inline;
 }
@@ -20,7 +21,7 @@
 .paginado li button:hover{
     background-color: #cb997e;
     color: black;
-  }
+}
 
 .paginado li button:active{
     background-color: #cb997e;
@@ -29,5 +30,6 @@
 }
 
 .paginado li button:focus{
-    background-color: #cb997e;
+    background-color: #363230;
+    color: antiquewhite;
 }
