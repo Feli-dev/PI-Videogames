@@ -26,6 +26,19 @@ export function getGenres() {
     }
 }
 
+export function getPlatforms() {
+    return async (dispatch) => {
+        let json1 = await axios.get("https://api.rawg.io/api/platforms?key=2d0511c1e1234fbf8dd0526c69329930");
+        let json2 = await axios.get("https://api.rawg.io/api/platforms?key=2d0511c1e1234fbf8dd0526c69329930&page=2");
+        let data = [].concat(json1.data.results, json2.data.results)
+        let data_filt = data.map(el => el.name)
+        return dispatch({
+            type: type.GET_PLATFORMS,
+            payload: data_filt,
+        })
+    }
+}
+
 export function filterGamesByGenres(payload) {
     return {
         type: type.FILTER_BY_GENRES,

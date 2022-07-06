@@ -4,7 +4,8 @@ const initialState = {
     videogames : [],
     allVideogames: [],
     genres: [],
-    detail: []
+    detail: [],
+    platforms: []
 }
 //Al usar state.allDogs en lugar de state.dogs, cada vez que aplique un filtro, state.dogs va a cambiar, pero voy a seguir teniendo guardados todos los perros en mi state.allDogs, entonces voy a poder cambiar de filtro sin tener que volver a cargar la página.
 export const rootReducer =(state = initialState, action)=>{
@@ -84,6 +85,11 @@ export const rootReducer =(state = initialState, action)=>{
             return {
                 ...state,
                 detail: action.payload,
+            }
+        case type.GET_PLATFORMS:
+            return {
+                ...state,
+                platforms: action.payload,
             }
         default: 
             return state;

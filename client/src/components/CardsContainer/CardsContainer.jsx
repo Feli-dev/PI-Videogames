@@ -5,14 +5,17 @@ import { useDispatch, useSelector } from "react-redux"
 import { getVideogames, getGenres, filterGamesByOrigin, filterGamesByGenres, sortByName, sortByRating } from "../../redux/actions";
 import CardVideogame from "../CardVideogame/CardVideogame";
 import Paginado from "../Paginado/Paginado";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 const CardsContainer = () => {
     const dispatch = useDispatch()
     const allVideogames = useSelector((state) => state.videogames)
+    const allGenres = useSelector((state) => state.genres)
+    
     useEffect(()=>{
         dispatch(getVideogames())
+        dispatch(getGenres())
     },[dispatch])
-
 
     const [currentPage, setCurrentPage] = useState(1); //Seteo el nro de página
     const [gamesPerPage] = useState(15); //Seteo la cantidad de elementos por página
@@ -22,13 +25,7 @@ const CardsContainer = () => {
     const paginado = (pageNumber) => { //Cambio la página
         setCurrentPage(pageNumber);
     }
-
-
     const [orden, setOrden] = useState(''); // Estado local que me sirve para modificar el estado cuando ordeno.
-    const allGenres = useSelector((state) => state.genres)
-    useEffect(() => {
-        dispatch(getGenres())
-    }, [dispatch])
 
     function handleFilterGenres(e) {
         e.preventDefault();
@@ -55,6 +52,8 @@ const CardsContainer = () => {
         setCurrentPage(1);
         setOrden(`Ordenado ${e.target.value}`);
     }
+
+
     return (
         <div className={style.content}>
             <div className={style.filterandorder}>
@@ -96,13 +95,15 @@ const CardsContainer = () => {
                     </li>
                 </ul>
             </div>
-            <div className={style.cardscontainer}>
-                {
-                    currentGames?.map( game => {
-                        return <CardVideogame key={game.id} route={game.id} name={game.name} genres={game.genres} image={game.background_image ? game.background_image : (game.image ? game.image : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN3dLS3psZfr-rjHOPnuarfi0NBWyTzSCAtj5t_-8i389h7YBcOvPMiroSqlaq1TFF9vc&usqp=CAU")} />
-                    })
-                }
-            </div>
+            { allVideogames.length < 1 ? <LoadingSpinner/> :
+                <div className={style.cardscontainer}>
+                    {   
+                        currentGames?.map( game => {
+                            return <CardVideogame key={game.id} route={game.id} name={game.name} genres={game.genres} image={game.background_image ? game.background_image : (game.image ? game.image : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN3dLS3psZfr-rjHOPnuarfi0NBWyTzSCAtj5t_-8i389h7YBcOvPMiroSqlaq1TFF9vc&usqp=CAU")} />
+                        })
+                    }
+                </div>
+            }
             <Paginado gamesPerPage={gamesPerPage} allVideogames={allVideogames.length} paginado={paginado} />
         </div>
     )

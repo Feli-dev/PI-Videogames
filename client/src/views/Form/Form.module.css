@@ -11,6 +11,7 @@
     color: rgb(41, 40, 40);
     min-height: 90vh;
     max-width: 100vw;
+    flex-direction: row;
 }
 
 .formContainer p {
@@ -143,9 +144,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .boxSelect {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: column;
-    margin-left: 20px;
+    height: 200px;
+    width: 400px;
+    margin-top: 20px;
 }
 
 .selectOption {
@@ -213,4 +216,34 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     width: 20px;
     height: 20px;
     cursor: pointer
+}
+
+.boxSelects{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 40%;
+}
+
+.boxInputs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 40%;
+}
+
+.form {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+.error {
+    color: rgb(190, 55, 55);
 }

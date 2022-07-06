@@ -40,12 +40,9 @@ const getVideogames = async (req, res) => {
                 include: Genre,
             })
             var json1 = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page_size=40`);
-            // var json2 = await axios.get(json1.data.next);
-            // var json3 = await axios.get(json2.data.next);
-            // var json4 = await axios.get(json3.data.next);
-            // var json5 = await axios.get(json4.data.next);
-            // var data = [].concat(json1.data.results, json2.data.results, json3.data.results, json4.data.results, json5.data.results)
-            var data = [].concat(json1.data.results)
+            var json2 = await axios.get(json1.data.next);
+            var json3 = await axios.get(json2.data.next);
+            var data = [].concat(json1.data.results, json2.data.results, json3.data.results)
             var data_filt = []
             data.forEach(e => {
                 data_filt.push({
@@ -64,18 +61,17 @@ const getVideogames = async (req, res) => {
     }
 }
 const getIdVideogame = async (req, res) => {
-    //background_image, name y genres
-    //15 por página
     const {idVideogame} = req.params
     try {
         if(idVideogame && idVideogame.length>7) {
-            var find_db = await Videogame.findByPk(idVideogame)
-            if(find_db.length>1) res.json(find_db)
-            else {throw new Error(`Not exist videogame with id ${idVideogame}`)}
+            var find_db = await Videogame.findByPk(idVideogame, {include: Genre,})
+            console.log(find_db)
+            if(find_db.dataValues?.id) res.json(find_db)
+            else {throw new Error(`Not exist videogame in db with id ${idVideogame}`)}
         }else if (idVideogame){
             var {data} = await axios.get(`https://api.rawg.io/api/games/${idVideogame}?&key=${API_KEY}`)
             if(data.hasOwnProperty("id")) res.json(data)
-            else {throw new Error(`Not exist videogame with id ${idVideogame}`)} 
+            else {throw new Error(`Not exist videogame in api with id ${idVideogame}`)} 
         } else {
             throw new Error(`Not received id`)
         }

@@ -18,7 +18,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     launch_Date: {
-      type: DataTypes.DATEONLY
+      type: DataTypes.STRING
     },
     rating: {
       type: DataTypes.FLOAT,
