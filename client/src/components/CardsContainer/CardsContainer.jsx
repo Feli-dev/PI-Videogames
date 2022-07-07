@@ -59,21 +59,30 @@ const CardsContainer = () => {
             <div className={style.filterandorder}>
                 <ul className={style.lista}>
                     <li className={style.item}>
-                        <select className={style.itemSelect} onChange={e => handleSortByName(e)}  >
+                        <select className={style.itemSelect} onChange={e => {
+                            handleSortByName(e)
+                            e.target.parentNode.parentNode.childNodes[1].childNodes[0].options[0].selected = true
+                            }}  >
                             <option className={style.selectOption} value='selected' hidden >Sort by name</option>
                             <option className={style.selectOption} value='asc'>A - Z</option>
                             <option className={style.selectOption} value='desc'>Z - A</option>
                         </select>
                     </li>
                     <li className={style.item} >
-                        <select className={style.itemSelect} onChange={e => handleSortByRating(e)}>
+                        <select className={style.itemSelect} onChange={e => {
+                            handleSortByRating(e)
+                            e.target.parentNode.parentNode.childNodes[0].childNodes[0].options[0].selected = true
+                            }}>
                             <option className={style.selectOption} value='selected' hidden>Sort by Rating</option>
                             <option className={style.selectOption} value='asc'>0⭐ - 5⭐</option>
                             <option className={style.selectOption} value='desc'>5⭐ - 0⭐</option>
                         </select>
                     </li>
                     <li className={style.item} >
-                        <select className={style.itemSelect} onChange={e => handleFilterGenres(e)}>
+                        <select className={style.itemSelect} onChange={e => {
+                            handleFilterGenres(e)
+                            e.target.parentNode.parentNode.childNodes[3].childNodes[0].options[0].selected = true
+                            }}>
                             <option className={style.selectOption} key={0} value='all'>All Genres</option>
                             {allGenres?.sort(function (a, b) {
                                 if (a.name < b.name) return -1;
@@ -87,7 +96,10 @@ const CardsContainer = () => {
                         </select>
                     </li>
                     <li className={style.item} >
-                        <select className={style.itemSelect} onChange={e => handleFilterOrigin(e)}>
+                        <select className={style.itemSelect} onChange={e => {
+                            handleFilterOrigin(e)
+                            e.target.parentNode.parentNode.childNodes[2].childNodes[0].options[0].selected = true
+                            }}>
                             <option className={style.selectOption} value='all'>All Games</option>
                             <option className={style.selectOption} value='api'>Existent Games</option>
                             <option className={style.selectOption} value='created'>Created Games</option>

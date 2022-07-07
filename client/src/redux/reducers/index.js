@@ -86,6 +86,11 @@ export const rootReducer =(state = initialState, action)=>{
                 ...state,
                 detail: action.payload,
             }
+        case type.CLEAN_DETAIL:
+            return {
+                ...state,
+                detail: action.payload,
+            }
         case type.GET_PLATFORMS:
             return {
                 ...state,

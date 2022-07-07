@@ -38,16 +38,16 @@ function validate(input) { //Arreglar validaciones
         errors.rating = 'Your rating must be greater than zero';
     } 
     else if (!input.image) {
-        errors.rating = 'Image link is required';
+        errors.image = 'Image link is required';
     }
-    else if (!input.platforms) {
-        errors.rating = 'Select at least one platform';
+    else if (input.platforms.length < 1) {
+        errors.platforms = 'Select at least one platform';
     }
     else if (input.platforms.length > 7) {
-        errors.rating = 'Even GTA V did not dare so much';
+        errors.platforms = 'Even GTA V did not dare so much';
     }
-    else if (!input.genres) {
-        errors.rating = 'Select at least one genre';
+    else if (input.genres.length < 1) {
+        errors.genres = 'Select at least one genre';
     }
 
     return errors;
@@ -79,19 +79,12 @@ const Form =()=>{
     useEffect(() => {
         dispatch(getGenres());
     },[dispatch]);
-    console.log(allPlatforms)
 
     function handleChange(e) {
         setInput({
             ...input,
             [e.target.name]: e.target.value,
         });
-        setErrors(validate({
-            ...input,
-            [e.target.name]: e.target.value,
-        }));
-
-        console.log(input)
     }
 
     
@@ -115,7 +108,6 @@ const Form =()=>{
                     ...input,
                     genres: [...input.genres, {name: e.target.value, id: idGenre}]
                 });
-                console.log(input);
         }
     }
     
@@ -220,6 +212,9 @@ const Form =()=>{
                         <div className={style.boxLabelInput}>
                             <label className={style.formLabel}>Image</label>
                             <input className={style.formInput} type='text' value={input.image} name='image' onChange={e => handleChange(e)} />
+                            {errors.image && (
+                                <p className={style.error}>{errors.image}</p>
+                            )}
                         </div>
                     </div>
                     <div className={style.boxSelects}>
@@ -239,8 +234,11 @@ const Form =()=>{
                                     )
                                 })}
                             </select>
-                            
-                            <div className={style.boxGenresSelected}>
+                            <div className={style.boxGenresSelected}> 
+                                {errors.platforms && (input.platforms.length < 1) && (
+                                    <p className={style.error}>{errors.platforms}</p>
+                                )
+                                }
                                 {input.platforms.map(el => {
                                     return (
                                         <div key={el} className={style.cube}>
@@ -269,8 +267,11 @@ const Form =()=>{
                                     )
                                 })}
                             </select>
-                            
                             <div className={style.boxGenresSelected}>
+                                {input.genres.length < 1 && (
+                                    <p className={style.error}>{errors.genres}</p>
+                                )
+                                }
                                 {input.genres.map(el => {
                                     return (
                                         <div key={el.id} className={style.cube}>

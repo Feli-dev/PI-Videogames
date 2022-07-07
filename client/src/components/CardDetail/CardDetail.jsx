@@ -2,7 +2,7 @@ import React from "react";
 import style from './CardDetail.module.css';
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react";
-import {getDetail} from "../../redux/actions/index"
+import {getDetail, cleanDetail} from "../../redux/actions/index"
 import {useParams} from "react-router-dom"
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
@@ -13,6 +13,9 @@ const CardDetail =()=>{
     const game = useSelector((state) => state.detail)
     useEffect(()=>{
         dispatch(getDetail(id))
+        return function cleanUp(){
+            dispatch(cleanDetail())
+        }
     },[dispatch, id])
     // Logos
     // Stores
@@ -104,7 +107,7 @@ const CardDetail =()=>{
                                 var aux = {}
                                 if(el.platform.name.toLowerCase().includes("playstation")) {aux.content = playstation}
                                 else if(el.platform.name.toLowerCase().includes("xbox")) {aux.content = xbox}
-                                else if(el.platform.name.toLowerCase().includes("pc") || el.platform.name.toLowerCase().includes("linux") || el.platform.name.toLowerCase().includes("macintosh")) {aux.content = pc}
+                                else if(el.platform.name.toLowerCase().includes("pc") || el.platform.name.toLowerCase().includes("linux") || el.platform.name.toLowerCase().includes("mac")) {aux.content = pc}
                                 else if(el.platform.name.toLowerCase().includes("ios") || el.platform.name.toLowerCase().includes("android")) {aux.content = mobile}
                                 else if(el.platform.name.toLowerCase().includes("nintendo")) {aux.content = nintendo}
                                 else if(el.platform.name.toLowerCase().includes("web")) {aux.content = internet}

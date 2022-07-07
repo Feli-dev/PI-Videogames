@@ -19,9 +19,11 @@ const SearchBar=()=>{
 
     function handleSubmit(e){
         e.preventDefault();
-        var found = getVideogames(name);
-        dispatch(found)
-        setName('');
+        if(name !== ""){
+            var found = getVideogames(name);
+            dispatch(found)
+            setName('');
+        }
         // if(history.location.pathname !== "/home") {
         //     history.push('/home');
         // } Para poder buscar desde cualquier lado

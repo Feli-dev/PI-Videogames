@@ -87,3 +87,16 @@ export function getDetail(id) {
         }
     }
 }
+
+export function cleanDetail() {
+    return async function (dispatch) {
+        try {
+            return dispatch({
+                type: type.GET_DETAIL,
+                payload: "",
+            })
+        } catch (err) {
+            console.log(err)
+        }
+    }
+}
